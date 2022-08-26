@@ -1,0 +1,45 @@
+<div class="mt-3 container">
+  <h4 class="text-center mb-4">
+    Selecione a data que deseja ver a foto e clique em Buscar
+  </h4>
+  <form class="form-group mt-2" (ngSubmit)="requestPictureByDay(data)">
+    <!-- <label class="mr-3" for="date">Selecione a data que deseja ver a foto e clique em Buscar </label> -->
+    <input
+      class="form-control mt-2"
+      type="date"
+      name="date"
+      id="date"
+      [(ngModel)]="data"
+    />
+    <div class="d-flex justify-content-center">
+      <button
+        type="submit"
+        [disabled]="isLoading == true"
+        class="btn btn-info btn-block mt-2"
+        id="btnEntrar"
+      >
+        {{ txtBtn }}
+        <ng-container *ngIf="isLoading == true">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </ng-container>
+      </button>
+    </div>
+  </form>
+  <div *ngIf="imageUrl">
+    <img class="img-fluid w-100 h-50" [src]="imageUrl" alt="Imagem do dia" />
+    <p class="mt-3" *ngIf="!error; else erro404">
+      Imagem capturada pela <cite>NASA</cite> em
+      <cite>{{ data | date: "dd/MM/yyyy" }}</cite>
+    </p>
+  </div>
+  <ng-template #erro404>
+    <p>
+      Infelizmente a bola de cristal está apresentando falhas e não conseguimos
+      mostrar imagens do futuro!
+    </p>
+  </ng-template>
+</div>
